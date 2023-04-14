@@ -2,7 +2,7 @@ import prisma from "../config/database.js";
 import { Order } from "../protocols/types.js";
 
 async function getClient(id: number) {
-  return prisma.clients.findUnique({
+  return await prisma.clients.findUnique({
     where: {
       id: id,
     },
@@ -10,7 +10,7 @@ async function getClient(id: number) {
 }
 
 async function getCake(id: number) {
-  return prisma.cakes.findUnique({
+  return await prisma.cakes.findUnique({
     where: {
       id: id,
     },
@@ -18,13 +18,13 @@ async function getCake(id: number) {
 }
 
 async function postOrder(order: Order) {
-  prisma.orders.create({
+  await prisma.orders.create({
     data: order,
   });
 }
 
 async function getAllOrders() {
-  return prisma.$queryRaw`SELECT json_build_object('id',clients.id,
+  return await prisma.$queryRaw`SELECT json_build_object('id',clients.id,
                               'name',clients.name,
                               'address',clients.address,
                               'phone',clients.phone) AS client, 
@@ -39,7 +39,7 @@ async function getAllOrders() {
 }
 
 async function getOrdersbyDate(date: Date | string) {
-  return prisma.$queryRaw`SELECT json_build_object('id',clients.id,
+  return await prisma.$queryRaw`SELECT json_build_object('id',clients.id,
                               'name',clients.name,
                               'address',clients.address,
                               'phone',clients.phone) AS client, 
@@ -49,12 +49,13 @@ async function getOrdersbyDate(date: Date | string) {
                               'image',cakes.image) AS cake, 
      orders.id AS "orderId", "createdAt", quantity, "totalPrice" 
      FROM orders JOIN clients ON orders."clientId" = clients.id 
-     JOIN cakes ON orders."cakeId" = cakes.id WHERE orders."createdAt" = ${date} 
+     JOIN cakes ON orders."cakeId" = cakes.id 
+     WHERE orders."createdAt" = TO_TIMESTAMP(${date},'YYYY-MM-DD')
      GROUP BY orders.id, clients.id, cakes.id ORDER BY orders.id `;
 }
 
 async function getOrder(id: number) {
-  return prisma.$queryRaw`SELECT json_build_object('id',clients.id,
+  return await prisma.$queryRaw`SELECT json_build_object('id',clients.id,
                               'name',clients.name,
                               'address',clients.address,
                               'phone',clients.phone) AS client, 
@@ -69,7 +70,7 @@ async function getOrder(id: number) {
 }
 
 async function getClientOrders(id: number) {
-  return prisma.$queryRaw`SELECT orders.id AS "orderId", "createdAt", quantity, "totalPrice", cakes.name AS "cakeName"
+  return await prisma.$queryRaw`SELECT orders.id AS "orderId", "createdAt", quantity, "totalPrice", cakes.name AS "cakeName"
     FROM orders JOIN cakes ON orders."cakeId" = cakes.id 
 	  WHERE orders."clientId" = ${id}`;
 }

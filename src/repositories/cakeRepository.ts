@@ -3,7 +3,7 @@ import { cakes } from "@prisma/client";
 import { Cake } from "../protocols/types.js";
 
 async function getCake(name: string): Promise<cakes>{
-  return prisma.cakes.findFirst({
+  return await prisma.cakes.findFirst({
     where: {
       name: name,
     },
@@ -11,7 +11,7 @@ async function getCake(name: string): Promise<cakes>{
 }
 
 async function postCake(cake: Cake) {
-  prisma.cakes.create({
+  await prisma.cakes.create({
     data: cake,
   });
 }
