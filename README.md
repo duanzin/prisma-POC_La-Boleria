@@ -1,4 +1,4 @@
-# Typescript_POC-La_Boleria
+# Prisma_POC-La_Boleria
 
 > a simple api for a fake cake store
 
