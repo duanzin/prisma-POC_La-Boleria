@@ -4,7 +4,7 @@
 
 ## Setting up the API
 
-After downloading the project, install all dependencies show on the package.json file, creant a blank SQL database and an .env file, set DATABASE_URL to your database link and run the following commands:
+After downloading the project, install all dependencies show on the package.json file, create a blank SQL database and an .env file, set DATABASE_URL to your database link and run the following commands:
 ```
 npx prisma init
 npx prisma migrate dev
