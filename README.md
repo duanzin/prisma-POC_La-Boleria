@@ -6,7 +6,6 @@
 
 After downloading the project, install all dependencies show on the package.json file, create a blank SQL database and an .env file, set DATABASE_URL to your database link adding '?schema=public' at the end of it, and run the following commands:
 ```
-npx prisma init
 npx prisma generate
 npx prisma migrate dev
 ```
