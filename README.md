@@ -4,18 +4,16 @@
 
 ## Setting up the API
 
-After downloading the project, install all dependencies show on the package.json file, create a blank SQL database and an .env file, set DATABASE_URL to your database link and run the following commands:
+After downloading the project, install all dependencies show on the package.json file, create a blank SQL database and an .env file, set DATABASE_URL to your database link adding '?schema=public' at the end of it, and run the following commands:
 ```
 npx prisma init
+npx prisma generate
 npx prisma migrate dev
 ```
 The code should automatically run the seed command. If this doesnt happen, run the following code:
 ```
 npm run prisma:seed
 ```
-
- Creating the database using PgAdmin is recommended.
-
 
 > (Optional) you can also set PORT to your preferred port. By default the project will run on port 5000.
 
